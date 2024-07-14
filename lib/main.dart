@@ -3,41 +3,38 @@ import 'package:flutter_masterclass/home.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: Home(),
+    home: MainContent(),
   ));
 }
 
-// sandbox
+class MainContent extends StatelessWidget {
+  const MainContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Home();
+  }
+}
+
 class Sandbox extends StatelessWidget {
   const Sandbox({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sandbox'),
-        backgroundColor: Colors.grey,
-      ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: 100,
-            color: Colors.red,
-            child: const Text('one'),
-          ),
-          Container(
-            height: 200,
-            color: Colors.green,
-            child: const Text('two'),
-          ),
-          Container(
-            height: 300,
-            color: Colors.blue,
-            child: const Text('three'),
-          )
-        ]
+    return Container(
+      color: Colors.orange,
+      // width: 200,
+      // height: 100,
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.fromLTRB(10, 40, 0, 0),
+      child: const Text(
+        "Hello, Julia!",
+        style: TextStyle(
+          fontSize: 18,
+          letterSpacing: 4,
+          decoration: TextDecoration.underline,
+          fontStyle: FontStyle.italic,
+        ),
       ),
     );
   }
