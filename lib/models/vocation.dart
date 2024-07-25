@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 enum Vocation {
   raider(
     title: "Terminal Raider",
