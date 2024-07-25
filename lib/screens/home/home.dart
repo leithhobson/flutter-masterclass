@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rpg/models/character.dart';
+import 'package:flutter_rpg/screens/home/character_card.dart';
+import 'package:flutter_rpg/shared/styled_button.dart';
+import 'package:flutter_rpg/shared/styled_text.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,13 +16,27 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Characters'),
+        title: const StyledTitle('Your Characters'),
         centerTitle: true,
       ),
       body: Container(
-        padding: const EdgeInsets.all(16),
-        child: const Text('Home'),
-      ),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: characters.length,
+                  itemBuilder: (_, index) {
+                    return CharacterCard(character: characters[index]);
+                  },
+                ),
+              ),
+              StyledButton(
+                onPressed: () {},
+                child: const StyledHeading("Create Character"),
+              ),
+            ],
+          )),
     );
   }
 }

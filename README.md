@@ -1,4 +1,4 @@
-# flutter_masterclass
+# flutter_rpg
 
 A new Flutter project.
 

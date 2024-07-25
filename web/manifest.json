@@ -1,6 +1,6 @@
 {
-    "name": "flutter_masterclass",
-    "short_name": "flutter_masterclass",
+    "name": "flutter_rpg",
+    "short_name": "flutter_rpg",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_masterclass/screens/home/home.dart';
+import 'package:flutter_rpg/screens/home/home.dart';
+import 'package:flutter_rpg/theme.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    home: Home(),
+  runApp(MaterialApp(
+    theme: primaryTheme,
+    home: const Home(),
   ));
 }
 
-// sandbox
 class Sandbox extends StatelessWidget {
-  const Sandbox({super.key});
+  const Sandbox({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sandbox'),
-        backgroundColor: Colors.grey,
+        centerTitle: true,
       ),
-      body: const Text('sandbox')
+      body: const Center(
+        child: Text('Sandbox'),
+      ),
     );
   }
+}
+
+enum Priority {
+  low,
+  medium,
+  high,
+  urgent,
 }
