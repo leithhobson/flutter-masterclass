@@ -1,6 +1,7 @@
 import 'package:flutter_rpg/models/skill.dart';
 import 'package:flutter_rpg/models/stats.dart';
 import 'package:flutter_rpg/models/vocation.dart';
+import 'package:uuid/uuid.dart';
 
 class Character with Stats {
   // Fields
@@ -45,30 +46,32 @@ class Character with Stats {
   }
 }
 
+var uuid = const Uuid();
+
 // Dummy character data
 final List<Character> characters = [
   Character(
     name: 'Klara',
     slogan: 'The algorithmic sorcerer',
     vocation: Vocation.wizard,
-    id: '1',
+    id: uuid.v8(),
   ),
   Character(
     name: 'Jonny',
     slogan: 'Light me up',
     vocation: Vocation.junkie,
-    id: '2',
+    id: uuid.v8(),
   ),
   Character(
     name: 'Rusty',
     slogan: 'Fire in the hole!',
     vocation: Vocation.raider,
-    id: '3',
+    id: uuid.v8(),
   ),
   Character(
     name: 'Sara',
     slogan: 'The UX ninja',
     vocation: Vocation.ninja,
-    id: '4',
+    id: uuid.v8(),
   ),
 ];
