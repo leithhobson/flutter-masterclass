@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rpg/models/character.dart';
+import 'package:flutter_rpg/screens/profile/skill_list.dart';
+import 'package:flutter_rpg/screens/profile/stats_table.dart';
+import 'package:flutter_rpg/shared/styled_button.dart';
 import 'package:flutter_rpg/shared/styled_text.dart';
 import 'package:flutter_rpg/theme.dart';
 
@@ -22,7 +25,11 @@ class Profile extends StatelessWidget {
             // basic info - image, vocation, vocation description
             Container(
               padding: const EdgeInsets.all(16),
-              color: AppColours.secondaryColor.withOpacity(0.3),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              decoration: BoxDecoration(
+                color: AppColours.secondaryColor.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Row(
                 children: [
                   Image.asset(
@@ -46,9 +53,6 @@ class Profile extends StatelessWidget {
             //image
 
             // weapons and abilities
-            const SizedBox(
-              height: 20,
-            ),
             Center(
               child: Icon(
                 Icons.code,
@@ -61,7 +65,10 @@ class Profile extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
-                color: AppColours.secondaryColor.withOpacity(0.5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: AppColours.secondaryColor.withOpacity(0.5),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -86,7 +93,34 @@ class Profile extends StatelessWidget {
             ),
             // stats and skills
 
+            Container(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  StatsTable(character),
+                  SkillList(character),
+                ],
+              ),
+            ),
+
             // save button
+            StyledButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const StyledHeading("Character saved"),
+                    showCloseIcon: true,
+                    duration: const Duration(seconds: 2),
+                    backgroundColor: AppColours.secondaryColor,
+                  ),
+                );
+              },
+              child: const StyledHeading("Save Character"),
+            ),
+
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

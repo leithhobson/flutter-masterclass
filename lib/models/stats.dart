@@ -20,10 +20,10 @@ mixin Stats {
       };
 
   List<Map<String, String>> get statsAsList => [
-        {'stat': 'health', 'value': _health.toString()},
-        {'stat': 'attack', 'value': _attack.toString()},
-        {'stat': 'defense', 'value': _defense.toString()},
-        {'stat': 'skill', 'value': _skill.toString()},
+        {'title': 'health', 'value': _health.toString()},
+        {'title': 'attack', 'value': _attack.toString()},
+        {'title': 'defense', 'value': _defense.toString()},
+        {'title': 'skill', 'value': _skill.toString()},
       ];
 
   // Methods
@@ -44,6 +44,8 @@ mixin Stats {
         case 'skill':
           _skill++;
           break;
+        default:
+          return;
       }
       _points--;
     }
