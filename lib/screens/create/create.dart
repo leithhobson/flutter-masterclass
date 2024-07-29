@@ -3,22 +3,24 @@ import 'package:flutter_rpg/models/character.dart';
 import 'package:flutter_rpg/models/vocation.dart';
 import 'package:flutter_rpg/screens/create/vocation_card.dart';
 import 'package:flutter_rpg/screens/home/home.dart';
+import 'package:flutter_rpg/services/character_store.dart';
 import 'package:flutter_rpg/shared/styled_button.dart';
 import 'package:flutter_rpg/shared/styled_text.dart';
 import 'package:flutter_rpg/theme.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 var uuid = const Uuid();
 
-class Create extends StatefulWidget {
-  const Create({super.key});
+class CreateScreen extends StatefulWidget {
+  const CreateScreen({super.key});
 
   @override
-  State<Create> createState() => _CreateState();
+  State<CreateScreen> createState() => _CreateScreenState();
 }
 
-class _CreateState extends State<Create> {
+class _CreateScreenState extends State<CreateScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _sloganController = TextEditingController();
 
@@ -96,19 +98,28 @@ class _CreateState extends State<Create> {
     }
     // all validation passed
     else {
-      String _id = uuid.v8();
-
       Character newCharacter = Character(
-        id: _id,
+        id: uuid.v8(),
         name: name,
         slogan: slogan,
         vocation: _selectedVocation,
       );
 
-      characters.add(newCharacter);
-      Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-        return const Home();
-      }));
+      // Add character to store
+      Provider.of<CharacterStore>(context, listen: false)
+          .addCharacter(newCharacter);
+
+      // Navigate to home
+      Navigator.pop(context);
+
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (ctx) {
+      //       return const Home();
+      //     },
+      //   ),
+      // );
     }
 
     print("Name: $name, Slogan: $slogan");

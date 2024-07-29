@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rpg/models/skill.dart';
 import 'package:flutter_rpg/models/stats.dart';
 import 'package:flutter_rpg/models/vocation.dart';
-import 'package:uuid/uuid.dart';
 
 class Character with Stats {
   // Fields
@@ -19,6 +19,56 @@ class Character with Stats {
     required this.vocation,
     required this.id,
   });
+
+  // Character to firestore
+  Map<String, dynamic> toFirestore() {
+    return {
+      'name': name,
+      'slogan': slogan,
+      'isFavourite': _isFavourite,
+      'vocation': vocation.toString().split('.').last,
+      'skills': skills.map((skill) => skill.id).toList(),
+      'stats': statsAsMap,
+      'points': points,
+    };
+  }
+
+  // Firestore to character
+  factory Character.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    // Get data from snapshot
+    final data = snapshot.data()!;
+
+    // Create character instance
+    Character character = Character(
+      name: data['name'],
+      slogan: data['slogan'],
+      vocation: Vocation.values.firstWhere(
+        (vocation) => vocation.toString() == 'Vocation.${data['vocation']}',
+      ),
+      // Favorite
+
+      id: snapshot.id,
+    );
+
+    // Add skills
+    final List<String> skillIds = List<String>.from(data['skills']);
+    for (var skillId in skillIds) {
+      final skill = allSkills.firstWhere((skill) => skill.id == skillId);
+      character.addSkill(skill);
+    }
+
+    if (data['isFavourite']) {
+      character.toggleFavourite();
+    }
+
+    // Add stats
+    character.updateStats(points: data['points'], stats: data['stats']);
+
+    return character;
+  }
 
   // Methods
 
@@ -45,33 +95,3 @@ class Character with Stats {
     skills.clear();
   }
 }
-
-var uuid = const Uuid();
-
-// Dummy character data
-final List<Character> characters = [
-  Character(
-    name: 'Klara',
-    slogan: 'The algorithmic sorcerer',
-    vocation: Vocation.wizard,
-    id: uuid.v8(),
-  ),
-  Character(
-    name: 'Jonny',
-    slogan: 'Light me up',
-    vocation: Vocation.junkie,
-    id: uuid.v8(),
-  ),
-  Character(
-    name: 'Rusty',
-    slogan: 'Fire in the hole!',
-    vocation: Vocation.raider,
-    id: uuid.v8(),
-  ),
-  Character(
-    name: 'Sara',
-    slogan: 'The UX ninja',
-    vocation: Vocation.ninja,
-    id: uuid.v8(),
-  ),
-];
