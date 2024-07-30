@@ -30,6 +30,7 @@ class Character with Stats {
       'skills': skills.map((skill) => skill.id).toList(),
       'stats': statsAsMap,
       'points': points,
+      'isActive': 1,
     };
   }
 

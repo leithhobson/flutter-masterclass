@@ -25,6 +25,7 @@ class StyledHeading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toUpperCase(),
+      overflow: TextOverflow.ellipsis,
       style: GoogleFonts.kanit(
           textStyle: Theme.of(context).textTheme.headlineMedium),
     );

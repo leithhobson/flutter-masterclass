@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void initState() {
-    Provider.of<CharacterStore>(context, listen: false).fetchCharactersOnce();
+    Provider.of<CharacterStore>(context, listen: false).fetchCharacters();
     super.initState();
   }
 
@@ -34,12 +34,56 @@ class _HomeState extends State<Home> {
               Expanded(
                 child: Consumer<CharacterStore>(
                   builder: (context, value, child) {
-                    return ListView.builder(
-                      itemCount: value.characters.length,
-                      itemBuilder: (_, index) {
-                        return CharacterCard(
-                            character: value.characters[index]);
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        Provider.of<CharacterStore>(context, listen: false)
+                            .fetchCharacters();
                       },
+                      child: ListView.builder(
+                        itemCount: value.characters.length,
+                        itemBuilder: (_, index) {
+                          return Dismissible(
+                            key: Key(value.characters[index].id),
+                            // Confirm deletion
+                            confirmDismiss: (direction) async {
+                              return await showDialog(
+                                context: context,
+                                builder: (ctx) {
+                                  return AlertDialog(
+                                    title: StyledHeading(
+                                        "Delete ${value.characters[index].name}"),
+                                    content: const StyledText(
+                                        "Are you sure you want to delete this character?"),
+                                    actions: [
+                                      StyledButton(
+                                        onPressed: () {
+                                          Navigator.pop(ctx, true);
+                                        },
+                                        child: const StyledHeading("Be gone!"),
+                                      ),
+                                      StyledButton(
+                                        onPressed: () {
+                                          Navigator.pop(ctx, false);
+                                        },
+                                        child: StyledHeading(
+                                            "Save ${value.characters[index].name}!"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            onDismissed: (direction) {
+                              // Dialog to confirm deletion
+                              Provider.of<CharacterStore>(context,
+                                      listen: false)
+                                  .deleteCharacter(value.characters[index]);
+                            },
+                            child: CharacterCard(
+                                character: value.characters[index]),
+                          );
+                        },
+                      ),
                     );
                   },
                 ),

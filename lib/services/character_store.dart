@@ -29,9 +29,10 @@ class CharacterStore extends ChangeNotifier {
   }
 
   // Fetch characters
-  void fetchCharactersOnce() async {
-    if (_characters.isNotEmpty) return;
+  void fetchCharacters() async {
+    // if (_characters.isNotEmpty) return;
     final snapshot = await FirestoreService.getCharacters();
+    _characters.clear();
     for (var doc in snapshot.docs) {
       _characters.add(doc.data());
     }

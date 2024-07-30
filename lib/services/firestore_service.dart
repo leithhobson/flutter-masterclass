@@ -15,7 +15,9 @@ class FirestoreService {
 
   // Get characters once
   static Future<QuerySnapshot<Character>> getCharacters() {
-    return ref.get();
+    // get only active characters (active == 1)
+    return ref.where('isActive', isEqualTo: 1).get();
+    // return ref.get();
   }
 
   // Update character
@@ -30,6 +32,9 @@ class FirestoreService {
 
   // Delete character
   static Future<void> deleteCharacter(String id) async {
-    await ref.doc(id).delete();
+    // await ref.doc(id).delete();
+    await ref.doc(id).update({
+      'isActive': 0,
+    });
   }
 }

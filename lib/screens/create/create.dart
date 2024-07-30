@@ -55,44 +55,46 @@ class _CreateScreenState extends State<CreateScreen> {
       print("Name can not be empty");
 
       showDialog(
-          context: context,
-          builder: (ctx) {
-            return AlertDialog(
-              title: const StyledHeading("Your character needs a name."),
-              content:
-                  const StyledText("Please enter a name for your character."),
-              actions: [
-                StyledButton(
-                  onPressed: () {
-                    Navigator.pop(ctx);
-                  },
-                  child: const StyledHeading("OK"),
-                )
-              ],
-            );
-          });
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: const StyledHeading("Your character needs a name."),
+            content:
+                const StyledText("Please enter a name for your character."),
+            actions: [
+              StyledButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: const StyledHeading("OK"),
+              )
+            ],
+          );
+        },
+      );
 
       return;
     } else if (slogan.isEmpty) {
       print("Slogan can not be empty");
 
       showDialog(
-          context: context,
-          builder: (ctx) {
-            return AlertDialog(
-              title: const StyledHeading("Your character needs a slogan."),
-              content:
-                  const StyledText("Please enter a slogan for your character."),
-              actions: [
-                StyledButton(
-                  onPressed: () {
-                    Navigator.pop(ctx);
-                  },
-                  child: const StyledHeading("OK"),
-                )
-              ],
-            );
-          });
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: const StyledHeading("Your character needs a slogan."),
+            content:
+                const StyledText("Please enter a slogan for your character."),
+            actions: [
+              StyledButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: const StyledHeading("OK"),
+              )
+            ],
+          );
+        },
+      );
 
       return;
     }

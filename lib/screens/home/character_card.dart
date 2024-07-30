@@ -29,14 +29,15 @@ class CharacterCard extends StatelessWidget {
                 width: 50,
               ),
               const SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  StyledHeading(character.name),
-                  StyledText(character.vocation.title),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    StyledHeading(character.name),
+                    StyledText(character.vocation.title),
+                  ],
+                ),
               ),
-              const Expanded(child: SizedBox()),
               IconButton(
                 onPressed: () {},
                 icon: Icon(
