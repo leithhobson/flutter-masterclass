@@ -13,8 +13,10 @@ class CharacterCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (ctx) => Profile(character: character)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (ctx) => Profile(characterId: character.id)));
       },
       child: Card(
         shape: RoundedRectangleBorder(

@@ -38,4 +38,11 @@ class CharacterStore extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  // Toggle favourite
+  void toggleFavourite(Character character) {
+    character.toggleFavourite();
+    notifyListeners();
+    saveCharacter(character);
+  }
 }

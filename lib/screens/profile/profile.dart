@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rpg/models/character.dart';
+import 'package:flutter_rpg/screens/profile/heart.dart';
 import 'package:flutter_rpg/screens/profile/skill_list.dart';
 import 'package:flutter_rpg/screens/profile/stats_table.dart';
 import 'package:flutter_rpg/services/character_store.dart';
@@ -10,12 +11,15 @@ import 'package:flutter_rpg/theme.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key, required this.character});
+  const Profile({super.key, required this.characterId});
 
-  final Character character;
+  final String characterId;
 
   @override
   Widget build(BuildContext context) {
+    Character character = Provider.of<CharacterStore>(context, listen: true)
+        .characters
+        .firstWhere((char) => char.id == characterId);
     return Scaffold(
       appBar: AppBar(
         title: StyledTitle(character.name),
@@ -25,34 +29,45 @@ class Profile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // basic info - image, vocation, vocation description
-            Container(
-              padding: const EdgeInsets.all(16),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              decoration: BoxDecoration(
-                color: AppColours.secondaryColor.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: [
-                  Hero(
-                    tag: character.id,
-                    child: Image.asset(
-                      "assets/img/vocations/${character.vocation.image}",
-                      width: 140,
-                    ),
+            Stack(
+              // alignment: Alignment.topRight,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: AppColours.secondaryColor.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        StyledHeading(character.vocation.title),
-                        StyledText(character.vocation.description),
-                      ],
-                    ),
+                  child: Row(
+                    children: [
+                      Hero(
+                        tag: character.id,
+                        child: Image.asset(
+                          "assets/img/vocations/${character.vocation.image}",
+                          width: 140,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            StyledHeading(character.vocation.title),
+                            StyledText(character.vocation.description),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  top: 12,
+                  right: 12,
+                  child: Heart(character: character),
+                ),
+              ],
             ),
 
             //image
