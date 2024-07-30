@@ -27,14 +27,18 @@ class FirestoreService {
       'points': character.points,
       'skills': character.skills.map((skill) => skill.id).toList(),
       'isFavourite': character.isFavourite,
+      'lastUpdated': DateTime.now(),
     });
   }
 
   // Delete character
   static Future<void> deleteCharacter(String id) async {
     // await ref.doc(id).delete();
+    DateTime now = DateTime.now();
     await ref.doc(id).update({
       'isActive': 0,
+      'lastUpdated': now,
+      'setInactive': now,
     });
   }
 }
