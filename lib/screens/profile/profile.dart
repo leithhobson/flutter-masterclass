@@ -34,9 +34,12 @@ class Profile extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Image.asset(
-                    "assets/img/vocations/${character.vocation.image}",
-                    width: 140,
+                  Hero(
+                    tag: character.id,
+                    child: Image.asset(
+                      "assets/img/vocations/${character.vocation.image}",
+                      width: 140,
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(

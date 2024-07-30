@@ -24,9 +24,12 @@ class CharacterCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Row(
             children: [
-              Image.asset(
-                'assets/img/vocations/${character.vocation.image}',
-                width: 50,
+              Hero(
+                tag: character.id,
+                child: Image.asset(
+                  'assets/img/vocations/${character.vocation.image}',
+                  width: 50,
+                ),
               ),
               const SizedBox(width: 16),
               Expanded(
